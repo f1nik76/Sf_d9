@@ -1,0 +1,37 @@
+<!-- Наследование от default.html -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+<!-- Название OneNews -->
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- Выводим новость -->
+{% block content %}
+    <table>
+        <tr>
+            <td>
+                <h3>
+                    {{ post.title|censor }}
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <i>
+                    {{ post.pub_time|date:'d.m.Y' }}
+                </i>
+                Подписаться: 
+                {% for category in post.categories.all %}
+                    <a href="subscribe/?category_id={{category.pk}}&path_info={{request.path_info}}">{{category}}</a> 
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ post.text|censor }}
+            </td>
+        </tr>
+    </table>
+{% endblock content %}
